@@ -1,0 +1,42 @@
+export const buildings = [
+  {
+    id: "cat-house",
+    type: "house",
+    name: "Cat House",
+    emoji: "🏠",
+    description: "A cozy house for cats",
+    position: null,
+  },
+  {
+    id: "fish-shop",
+    type: "shop",
+    name: "Fish Shop",
+    emoji: "🐟",
+    description: "Fresh fish for hungry cats",
+    position: null,
+  },
+  {
+    id: "cat-cafe",
+    type: "cafe",
+    name: "Cat Café",
+    emoji: "☕",
+    description: "A place for cats to socialize",
+    position: null,
+  },
+  {
+    id: "cat-park",
+    type: "recreation",
+    name: "Cat Park",
+    emoji: "🌳",
+    description: "A park with climbing trees",
+    position: null,
+  },
+  {
+    id: "cat-spa",
+    type: "wellness",
+    name: "Cat Spa",
+    emoji: "💆",
+    description: "Relaxation for fancy cats",
+    position: null,
+  },
+];
