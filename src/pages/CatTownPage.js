@@ -6,6 +6,7 @@ import TownGrid from "../components/TownGrid/TownGrid";
 import BuildingsPanel from "../components/BuildingsPanel/BuildingsPanel";
 import { buildings } from "../data/buildings";
 import avatarFace from "../assets/avatar-face.png";
+import { useNavigate } from "react-router-dom";
 
 const theme = {
   colors: {
@@ -108,13 +109,38 @@ const SavedMessage = styled.span`
 const Avatar = styled.img`
   display: block;
   margin: 0 auto;
-  width: 180px;
+  width: 220px;
   height: auto;
   margin-top: 0;
   margin-bottom: 0;
 `;
 
+const FloatingButton = styled.button`
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+  border: 3px solid #8b7355;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #8b7355;
+  cursor: pointer;
+  z-index: 100;
+  transition: background 0.2s, transform 0.2s;
+  &:hover {
+    background: #f5f5f5;
+    transform: scale(1.08);
+  }
+`;
+
 function CatTownPage() {
+  const navigate = useNavigate();
   // Load from localStorage if available
   const getInitialBuildings = () => {
     const saved = localStorage.getItem("catTownBuildings");
@@ -139,15 +165,22 @@ function CatTownPage() {
     if (!activeId || !cellId) return null;
     const activeBuilding = townBuildings.find((b) => b.id === activeId);
     if (!activeBuilding) return null;
-    const [startRow, startCol] = cellId.split("-").map(Number);
+
+    const [originRow, originCol] = cellId.split("-").map(Number);
     const rows = activeBuilding.size?.rows || 1;
     const cols = activeBuilding.size?.cols || 1;
+
     // Check for out of bounds or overlap
     for (let dr = 0; dr < rows; dr++) {
       for (let dc = 0; dc < cols; dc++) {
-        const checkRow = startRow + dr;
-        const checkCol = startCol + dc;
-        if (checkRow >= gridSize.rows || checkCol >= gridSize.cols) {
+        const checkRow = originRow - dr; // Changed from + to - to grow upward
+        const checkCol = originCol + dc;
+        if (
+          checkRow < 0 ||
+          checkCol < 0 ||
+          checkRow >= gridSize.rows ||
+          checkCol >= gridSize.cols
+        ) {
           return false;
         }
         const cellId = `${checkRow}-${checkCol}`;
@@ -158,29 +191,35 @@ function CatTownPage() {
         if (occupying) return false;
       }
     }
-    // Stacking rule: for each cell the building would occupy
-    for (let dr = 0; dr < rows; dr++) {
-      for (let dc = 0; dc < cols; dc++) {
-        const checkRow = startRow + dr;
-        const checkCol = startCol + dc;
-        // If on bottom row, allow
-        if (checkRow === gridSize.rows - 1) continue;
-        // Otherwise, check if there is a building directly below
-        const belowOccupied = townBuildings.some((b) => {
-          if (!b.position) return false;
-          const [bRow, bCol] = b.position.split("-").map(Number);
-          const bRows = b.size?.rows || 1;
-          const bCols = b.size?.cols || 1;
-          return (
-            checkRow + 1 >= bRow &&
-            checkRow + 1 < bRow + bRows &&
-            checkCol >= bCol &&
-            checkCol < bCol + bCols
-          );
-        });
-        if (!belowOccupied) return false;
+
+    // Stacking rule: for each column the building would occupy, check only the bottom-most cell
+    for (let dc = 0; dc < cols; dc++) {
+      const bottomRow = originRow;
+      const checkCol = originCol + dc;
+      // If on bottom row, allow
+      if (bottomRow === gridSize.rows - 1) continue;
+      // Otherwise, check if there is a building directly below
+      const belowRow = bottomRow + 1;
+      let found = false;
+      for (const b of townBuildings) {
+        if (!b.position) continue;
+        const [bRow, bCol] = b.position.split("-").map(Number);
+        const bRows = b.size?.rows || 1;
+        const bCols = b.size?.cols || 1;
+        for (let dr = 0; dr < bRows; dr++) {
+          for (let dc2 = 0; dc2 < bCols; dc2++) {
+            if (bRow - dr === belowRow && bCol + dc2 === checkCol) {
+              found = true;
+              break;
+            }
+          }
+          if (found) break;
+        }
+        if (found) break;
       }
+      if (!found) return false;
     }
+
     return true;
   };
 
@@ -197,34 +236,10 @@ function CatTownPage() {
           )
         );
       } else {
-        // Multi-cell placement logic (origin is bottom-left, grows up and right)
-        const activeBuilding = townBuildings.find((b) => b.id === active.id);
-        const [originRow, originCol] = over.id.split("-").map(Number);
-        const rows = activeBuilding.size?.rows || 1;
-        const cols = activeBuilding.size?.cols || 1;
-        // Check for out of bounds or overlap (new convention)
-        let canPlace = true;
-        for (let dr = 0; dr < rows; dr++) {
-          for (let dc = 0; dc < cols; dc++) {
-            const checkRow = originRow - dr;
-            const checkCol = originCol + dc;
-            if (
-              checkRow < 0 ||
-              checkCol < 0 ||
-              checkRow >= gridSize.rows ||
-              checkCol >= gridSize.cols
-            ) {
-              canPlace = false;
-            }
-            const cellId = `${checkRow}-${checkCol}`;
-            // Don't count the building being moved
-            const occupying = townBuildings.find(
-              (b) => b.position === cellId && b.id !== active.id
-            );
-            if (occupying) canPlace = false;
-          }
-        }
-        if (!canPlace) return;
+        // Check if placement is valid using canPlaceAtCell
+        const canPlace = canPlaceAtCell(over.id, active.id);
+        if (!canPlace) return; // Don't allow drop if placement is invalid
+
         setTownBuildings(
           townBuildings.map((building) =>
             building.id === active.id
@@ -312,6 +327,7 @@ function CatTownPage() {
               onReset={handleReset}
             />
           </MainContent>
+          <FloatingButton onClick={() => navigate("/")}>👁️</FloatingButton>
         </PageContainer>
       </DndContext>
     </ThemeProvider>
