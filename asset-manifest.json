@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/CatTown/static/js/main.d37692c2.js",
+    "main.js": "/CatTown/static/js/main.3057d5e7.js",
     "static/media/avatar-face.png": "/CatTown/static/media/avatar-face.9cd34639dacd653136ad.png",
     "index.html": "/CatTown/index.html",
-    "main.d37692c2.js.map": "/CatTown/static/js/main.d37692c2.js.map"
+    "main.3057d5e7.js.map": "/CatTown/static/js/main.3057d5e7.js.map"
   },
   "entrypoints": [
-    "static/js/main.d37692c2.js"
+    "static/js/main.3057d5e7.js"
   ]
 }
