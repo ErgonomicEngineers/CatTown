@@ -13,6 +13,9 @@ export const ItemContainer = styled.div`
   transition: transform 0.2s, box-shadow 0.2s;
   z-index: 2000;
 
+  width: ${({ size }) => (size?.cols === 2 ? "210px" : "100px")};
+  height: ${({ size }) => (size?.rows === 2 ? "210px" : "100px")};
+
   &[data-dragging="true"] {
     z-index: 2000;
   }

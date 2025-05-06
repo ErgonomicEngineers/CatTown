@@ -2,7 +2,7 @@ import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { ItemContainer } from "./styles";
 
-const DraggableItem = ({ id, name, emoji }) => {
+const DraggableItem = ({ id, name, emoji, size }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
   });
@@ -17,6 +17,7 @@ const DraggableItem = ({ id, name, emoji }) => {
     <ItemContainer
       ref={setNodeRef}
       style={style}
+      size={size}
       {...listeners}
       {...attributes}
     >
