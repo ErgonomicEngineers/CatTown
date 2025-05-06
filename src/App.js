@@ -1,12 +1,17 @@
 import React from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import CatTownPage from "./pages/CatTownPage";
+import CenteredPreviewPage from "./pages/CenteredPreviewPage";
 
 // define your route tree
 const router = createHashRouter([
   {
-    path: "/",
+    path: "/cattown",
     element: <CatTownPage />,
+  },
+  {
+    path: "/",
+    element: <CenteredPreviewPage />,
   },
   // …add more routes here…
 ]);

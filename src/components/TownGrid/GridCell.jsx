@@ -20,8 +20,9 @@ const highlightStyles = {
 const Cell = styled.div`
   aspect-ratio: 1;
   width: 100px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid #e0e0e0;
+  background: ${(props) =>
+    props.$hideBorder ? "transparent" : "rgba(255, 255, 255, 0.5)"};
+  border: ${(props) => (props.$hideBorder ? "none" : "1px solid #e0e0e0")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,8 +31,9 @@ const Cell = styled.div`
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(245, 245, 245, 0.9);
-    border-color: #999;
+    background: ${(props) =>
+      props.$hideBorder ? "transparent" : "rgba(245, 245, 245, 0.9)"};
+    border-color: ${(props) => (props.$hideBorder ? "none" : "#999")};
   }
 
   ${(props) =>
@@ -54,6 +56,7 @@ const GridCell = ({
   canPlace,
   highlight,
   highlightColor,
+  hideBorder = false,
 }) => {
   const { setNodeRef } = useDroppable({ id });
 
@@ -64,6 +67,7 @@ const GridCell = ({
       data-droppable-id={id}
       $highlight={highlight}
       $highlightColor={highlightColor}
+      $hideBorder={hideBorder}
     >
       {children}
     </Cell>
