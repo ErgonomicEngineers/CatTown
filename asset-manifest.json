@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/CatTown/static/css/main.8b716bfe.css",
-    "main.js": "/CatTown/static/js/main.40e8c1bc.js",
+    "main.js": "/CatTown/static/js/main.88f17ec6.js",
     "static/media/avatar-face.gif": "/CatTown/static/media/avatar-face.6b896aa79db9c5133d3e.gif",
     "static/media/build3.gif": "/CatTown/static/media/build3.a8f6e46c465ee59c0499.gif",
     "static/media/build4.gif": "/CatTown/static/media/build4.75bbe26d08717e609a37.gif",
@@ -25,10 +25,10 @@
     "static/media/1-01.png": "/CatTown/static/media/1-01.e3cf0c4e4e258a2992ee.png",
     "index.html": "/CatTown/index.html",
     "main.8b716bfe.css.map": "/CatTown/static/css/main.8b716bfe.css.map",
-    "main.40e8c1bc.js.map": "/CatTown/static/js/main.40e8c1bc.js.map"
+    "main.88f17ec6.js.map": "/CatTown/static/js/main.88f17ec6.js.map"
   },
   "entrypoints": [
     "static/css/main.8b716bfe.css",
-    "static/js/main.40e8c1bc.js"
+    "static/js/main.88f17ec6.js"
   ]
 }
