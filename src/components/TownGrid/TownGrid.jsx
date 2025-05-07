@@ -17,7 +17,6 @@ const GridContainer = styled.div`
   border: ${(props) => (props.$hideGridLines ? "none" : "2px solid #e0e0e0")};
   position: relative;
   width: fit-content;
-  margin: 20px auto;
 `;
 
 const TownGrid = forwardRef(
@@ -57,11 +56,9 @@ const TownGrid = forwardRef(
 
         const activeBuilding = buildings.find((b) => b.id === active.id);
         if (!activeBuilding) {
-          console.log("Early return: no activeBuilding");
           return null;
         }
 
-        console.log("TEST LOG");
 
         const [originRow, originCol] = cellId.split("-").map(Number);
         const rows = activeBuilding.size?.rows || 1;
@@ -81,14 +78,6 @@ const TownGrid = forwardRef(
             occupiedCells.push(`${checkRow}-${checkCol}`);
           }
         }
-        console.log(
-          "Trying to place building:",
-          activeBuilding.name,
-          "at origin:",
-          originRow,
-          originCol
-        );
-        console.log("Occupied cells:", occupiedCells);
 
         // Check for out of bounds or overlap
         for (let dr = 0; dr < rows; dr++) {
