@@ -19,18 +19,22 @@ const theme = {
 };
 
 const PageContainer = styled.div`
+  height: auto;
   min-height: 100vh;
   padding: 32px 0;
   background: white;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 116px;
+  overflow-y: visible;
+  position: relative;
 `;
 
 const MainContent = styled.div`
   display: flex;
   gap: 48px;
+  height: auto;
+  overflow-y: visible;
 `;
 
 const LeftPanel = styled.div`
@@ -119,20 +123,51 @@ const AvatarBubbleRow = styled.div`
   margin-top: -82px;
 `;
 
+const ConversationBubble = styled.div`
+  position: absolute;
+  right: -200px;
+  top: -50px;
+  background: #eeeef3;
+  padding: 16px 24px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 200px;
+  &:after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    bottom: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #eeeef3;
+  }
+`;
+
 const SavedMessage = styled.span`
-  margin-left: 16px;
+  position: absolute;
+  top: 20%;
+  left: 29.1%;
   color: #458445;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 2rem;
   transition: opacity 0.3s;
+  background: #eeeef3;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 `;
 
 const Avatar = styled.img`
   display: block;
   margin: 0 auto;
-  width: 500px;
+  width: 800px;
   height: auto;
-  margin-top: 0;
+  margin-top: -150px;
   margin-bottom: 0;
 `;
 
@@ -140,8 +175,8 @@ const FloatingButton = styled.button`
   position: fixed;
   right: 40px;
   bottom: 40px;
-  width: 72px;
-  height: 72px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
@@ -340,7 +375,7 @@ function CatTownPage() {
                   ref={townGridRef}
                   buildings={townBuildings}
                   gridSize={{ rows: 3, cols: 3 }}
-                  cellSize={199.33}
+                  cellSize={165}
                 />
               </GridWrapper>
               <AvatarBubbleRow>
@@ -352,7 +387,7 @@ function CatTownPage() {
               onReset={handleReset}
             />
           </MainContent>
-          <FloatingButton onClick={() => navigate("/")}>
+          <FloatingButton onClick={() => navigate("/townpreview")}>
             <img src={crossImage} alt="Cross" />
           </FloatingButton>
         </PageContainer>

@@ -4,6 +4,7 @@ import GlobalStyles from "../styles/GlobalStyles";
 import TownGrid from "../components/TownGrid/TownGrid";
 import { buildings } from "../data/buildings";
 import avatarFace from "../assets/avatar-face.gif";
+import convoBubble from "../assets/convo_bubble.png";
 import { useNavigate } from "react-router-dom";
 import toolImage from "../assets/tool.png";
 import backImage from "../assets/back.png";
@@ -34,22 +35,32 @@ const GridAvatarWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 32px;
+  position: relative;
 `;
 
 const Avatar = styled.img`
-  width: 657px;
-  height: 657px;
+  width: 700px;
+  height: 700px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
-  margin-top: -426px;
+  margin-top: -550px;
+`;
+
+const ConversationBubble = styled.img`
+  position: absolute;
+  right: -20px;
+  top: 200px;
+  width: 363px;
+  height: auto;
+  z-index: 1000;
 `;
 
 const FloatingButton = styled.button`
   position: fixed;
   right: 40px;
   bottom: 40px;
-  width: 72px;
-  height: 72px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
@@ -72,7 +83,8 @@ const FloatingButton = styled.button`
 
 // Hide grid lines by passing a prop to TownGrid and using a custom style
 const NoLineGridWrapper = styled.div`
-  margin-left: 260px;
+  margin-left: 290px;
+  margin-top: 100px;
   & > div {
     border: none !important;
     background: transparent !important;
@@ -140,11 +152,12 @@ function CenteredPreviewPage() {
             />
           </NoLineGridWrapper>
           <Avatar src={avatarFace} alt="Avatar" />
+          <ConversationBubble src={convoBubble} alt="Conversation bubble" />
         </GridAvatarWrapper>
         <FloatingButton onClick={() => navigate("/cattown")}>
           <img src={toolImage} alt="Tool" />
         </FloatingButton>
-        <BackButton onClick={() => navigate("/cattown")}>
+        <BackButton onClick={() => navigate("/")}>
           <img src={backImage} alt="Back" />
         </BackButton>
       </CenteredContainer>
