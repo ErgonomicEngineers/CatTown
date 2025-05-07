@@ -9,19 +9,21 @@ import catIcon from '../assets/cat.png';
 import { PostureContext } from '../context/PostureContext';
 import videoIcon from '../assets/video.png';
 import homeIcon from '../assets/4-01.png';
+import completedHouse from '../assets/completed-house.png';
+import incompleteHouse from '../assets/incomplete_house.png'; // You'll need to add this image
 
 const UserSessionPage = () => {
   const [cameraEnabled, setCameraEnabled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [timerState, setTimerState] = useState('stopped'); // 'stopped', 'running', 'paused'
   const [sessionCompleted, setSessionCompleted] = useState(false);
+  const [buildingCompleted, setBuildingCompleted] = useState(false);
 
   // Get posture tracking functions from context
   const { startTracking, stopTracking, isTracking } = useContext(PostureContext);
 
   // Check if tracking was previously enabled
   useEffect(() => {
-    // For debugging
     console.log("Current tracking state:", isTracking);
   }, [isTracking]);
 
@@ -34,7 +36,11 @@ const UserSessionPage = () => {
   };
 
   const handleConfirmGiveUp = () => {
-    handleTimerControl('stopped'); // resets the timer
+    // When giving up, show incomplete construction page
+    setSessionCompleted(true);
+    setBuildingCompleted(false); // Always incomplete when giving up
+
+    handleTimerControl('stopped'); // Reset the timer
     setShowModal(false);
   };
 
@@ -93,6 +99,23 @@ const UserSessionPage = () => {
     }
   };
 
+  // Handle session completion with building status
+  const handleSessionComplete = (isFullyBuilt) => {
+    // Log the received value immediately
+    console.log(`Received building status from timer: ${isFullyBuilt}`);
+    
+    // Set session state
+    setSessionCompleted(true);
+    
+    // Set building completion status - this determines which image is shown
+    setBuildingCompleted(isFullyBuilt);
+  
+    // Also stop tracking when session completes
+    stopTracking();
+    setCameraEnabled(false);
+  
+    console.log(`Session completed with building ${isFullyBuilt ? 'COMPLETE' : 'INCOMPLETE'}`);
+  };
 
   return (
     <div className="session-page">
@@ -113,9 +136,16 @@ const UserSessionPage = () => {
         {/* Session Timer Component */}
         {sessionCompleted ? (
           <div className="session-complete-wrapper">
-            <h2>New Building in Town!</h2>
-            <p>We cats know you can do this, human!</p>
-            <img src={require('../assets/completed-house.png')} alt="New building" className="building-gif" style={{ width: '400px', height: '400px' }} />
+            <h2>{buildingCompleted ? "New Building in Town!" : "Incomplete Construction "}</h2>
+            <p>{buildingCompleted
+              ? "Great job maintaining good posture! The cats have a cozy new home!"
+              : "We need better posture to finish this building. We cats know you can do better next time!"}</p>
+            <img
+              src={buildingCompleted ? completedHouse : incompleteHouse}
+              alt={buildingCompleted ? "Completed building" : "Incomplete building"}
+              className="building-gif"
+              style={{ width: '400px', height: '400px' }}
+            />
             <button className="new-session-button" onClick={() => window.location.reload()}>
               New Session
             </button>
@@ -126,7 +156,7 @@ const UserSessionPage = () => {
               initialTime="08:00:00"
               timerState={timerState}
               cameraEnabled={cameraEnabled}
-              onSessionComplete={() => setSessionCompleted(true)}
+              onSessionComplete={handleSessionComplete}
             />
             {/* Timer Control Buttons */}
             <div className="timer-controls">
@@ -186,7 +216,7 @@ const UserSessionPage = () => {
             <span className="tooltip-text">User Home</span>
           </div>
           <div className="tooltip-wrapper">
-            {sessionCompleted && (
+            {sessionCompleted && buildingCompleted && (
               <div className="speech-bubble">Try placing your new<br />building in Cat Town!</div>
             )}
             <Link to="/townpreview" className="side-button">
@@ -226,7 +256,6 @@ const UserSessionPage = () => {
         )}
       </div>
     </div>
-
   );
 };
 
