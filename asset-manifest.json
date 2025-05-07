@@ -1,24 +1,34 @@
 {
   "files": {
-    "main.css": "/CatTown/static/css/main.9545e8e0.css",
-    "main.js": "/CatTown/static/js/main.4b3b2708.js",
+    "main.css": "/CatTown/static/css/main.8b716bfe.css",
+    "main.js": "/CatTown/static/js/main.40e8c1bc.js",
     "static/media/avatar-face.gif": "/CatTown/static/media/avatar-face.6b896aa79db9c5133d3e.gif",
-    "static/media/cat_build0.gif": "/CatTown/static/media/cat_build0.9518fdad1e53604ea523.gif",
+    "static/media/build3.gif": "/CatTown/static/media/build3.a8f6e46c465ee59c0499.gif",
+    "static/media/build4.gif": "/CatTown/static/media/build4.75bbe26d08717e609a37.gif",
+    "static/media/build2.gif": "/CatTown/static/media/build2.27541d78ea75d62af7b3.gif",
+    "static/media/build1.gif": "/CatTown/static/media/build1.6f944767db55bdd0be88.gif",
+    "static/media/build0.gif": "/CatTown/static/media/build0.9518fdad1e53604ea523.gif",
     "static/media/avatar-face.png": "/CatTown/static/media/avatar-face.6d30624fddda9bf5e8a9.png",
+    "static/media/Average_Score.png": "/CatTown/static/media/Average_Score.e79009a77ac3d1a7aa12.png",
+    "static/media/completed-house.png": "/CatTown/static/media/completed-house.b4d1d479ad6524541247.png",
     "static/media/4-01.png": "/CatTown/static/media/4-01.7a9d4eb39f531718d799.png",
+    "static/media/incomplete_house.png": "/CatTown/static/media/incomplete_house.2f04690e97424abd4bf3.png",
     "static/media/2x1-02.png": "/CatTown/static/media/2x1-02.e60bd5176adaafec9893.png",
     "static/media/2x1-03.png": "/CatTown/static/media/2x1-03.cc1a93102554d6a8edd8.png",
     "static/media/1x2-01.png": "/CatTown/static/media/1x2-01.a4c8f64e272d12d302a8.png",
     "static/media/2x1-01.png": "/CatTown/static/media/2x1-01.35c82075a555eadcd0a4.png",
+    "static/media/neutral-cat-notif.png": "/CatTown/static/media/neutral-cat-notif.ae65b4a3c0dabc3d56a4.png",
+    "static/media/bad-cat-notif.png": "/CatTown/static/media/bad-cat-notif.db43e21c2612836aaf34.png",
+    "static/media/good-cat-notif.png": "/CatTown/static/media/good-cat-notif.56e1228c02a5a60262d0.png",
     "static/media/2-01.png": "/CatTown/static/media/2-01.cb63b0e672679a067e67.png",
     "static/media/3-01.png": "/CatTown/static/media/3-01.350eb08c527ce73b1ae1.png",
     "static/media/1-01.png": "/CatTown/static/media/1-01.e3cf0c4e4e258a2992ee.png",
     "index.html": "/CatTown/index.html",
-    "main.9545e8e0.css.map": "/CatTown/static/css/main.9545e8e0.css.map",
-    "main.4b3b2708.js.map": "/CatTown/static/js/main.4b3b2708.js.map"
+    "main.8b716bfe.css.map": "/CatTown/static/css/main.8b716bfe.css.map",
+    "main.40e8c1bc.js.map": "/CatTown/static/js/main.40e8c1bc.js.map"
   },
   "entrypoints": [
-    "static/css/main.9545e8e0.css",
-    "static/js/main.4b3b2708.js"
+    "static/css/main.8b716bfe.css",
+    "static/js/main.40e8c1bc.js"
   ]
 }
