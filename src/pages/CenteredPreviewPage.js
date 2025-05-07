@@ -39,16 +39,16 @@ const GridAvatarWrapper = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 700px;
-  height: 700px;
+  width: 550px;
+  height: 550px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
-  margin-top: -550px;
+  margin-top: -420px;
 `;
 
 const ConversationBubble = styled.img`
   position: absolute;
-  right: -20px;
+  right: -120px;
   top: 200px;
   width: 363px;
   height: auto;
@@ -83,7 +83,7 @@ const FloatingButton = styled.button`
 
 // Hide grid lines by passing a prop to TownGrid and using a custom style
 const NoLineGridWrapper = styled.div`
-  margin-left: 290px;
+  margin-left: 250px;
   margin-top: 100px;
   & > div {
     border: none !important;
@@ -148,7 +148,7 @@ function CenteredPreviewPage() {
               buildings={placedBuildings}
               gridSize={gridSize}
               hideGridLines // This prop can be used in TownGrid to hide lines if needed
-              cellSize={146}
+              cellSize={120}
             />
           </NoLineGridWrapper>
           <Avatar src={avatarFace} alt="Avatar" />
