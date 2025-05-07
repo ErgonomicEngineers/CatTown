@@ -1,0 +1,165 @@
+.session-timer {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* reduced from 1200px */
+  margin: 0 auto;
+}
+
+.timer-circle-container {
+  position: relative;
+  width: 650px;
+  height: 650px;
+  margin: -30px auto 0; /* Added negative top margin to move upward */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-circle {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-dot {
+  transition: cx 0.5s ease, cy 0.5s ease;
+}
+
+/* Time Display - adjusted positioning for larger circle */
+.time-display {
+  position: absolute;
+  top: 18%; /* Reduced from 22% to move up with the circle */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.time-label {
+  font-size: 20px; /* kept smaller as requested */
+  color: #000000;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.time-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-input {
+  width: 55px; /* smaller as requested */
+  background: none;
+  border: none;
+  font-size: 3rem; /* reduced from 5rem as requested */
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.time-input.hours {
+  width: 60px;
+}
+
+.time-input.seconds {
+  color: #666;
+}
+
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-input-container span {
+  font-size: 3rem; /* reduced from 5rem as requested */
+  font-weight: bold;
+  color: #333;
+  margin: 0 6px;
+}
+
+.time-value {
+  font-size: 2rem; /* reduced from 5.5rem as requested */
+  font-weight: bold;
+  color: #333;
+  -moz-appearance: textfield;
+}
+
+/* Cat animation - adjusted positioning for larger circle */
+.cat-animation {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+
+}
+
+.cat-image {
+  max-width: 100%;
+  max-height: 100%;
+  image-rendering: pixelated;
+}
+.progress-indicator {
+  transition: x 0.5s ease, y 0.5s ease;
+}
+/* Add these styles to your existing SessionTimer.css file */
+
+/* Time unit labels styling */
+.time-labels-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #b3acac;
+}
+
+.time-unit-label {
+  width: 60px;
+  text-align: center;
+}
+
+.time-unit-spacer {
+  width: 20px;
+}
+
+
+
+/* Ensure input fields align with the labels */
+.time-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+/* Progress indicator transition */
+.progress-indicator {
+  transition: x 0.5s ease, y 0.5s ease;
+}
+.time-group {
+  display: flex;
+  align-items: center;
+}
+
+.colon {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 10px;
+}
+
+.time-input,
+.time-value,
+.colon {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  text-align: center;
+}
