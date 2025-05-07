@@ -36,13 +36,13 @@ const SessionOverview = () => {
   const navigate = useNavigate();
   const [hoveredBar, setHoveredBar] = React.useState(null);
   const barData = [
-    { day: "MON", height: "60%", score: 80 },
-    { day: "TUE", height: "90%", score: 94 },
-    { day: "WED", height: "80%", score: 88 },
-    { day: "THU", height: "70%", score: 75 },
-    { day: "FRI", height: "85%", score: 90 },
-    { day: "SAT", height: "65%", score: 70 },
-    { day: "SUN", height: "75%", score: 78 },
+    { day: "MON", height: "60%", score: 6.0 },
+    { day: "TUE", height: "90%", score: 9.4 },
+    { day: "WED", height: "80%", score: 8.0 },
+    { day: "THU", height: "70%", score: 7.5 },
+    { day: "FRI", height: "85%", score: 8.5 },
+    { day: "SAT", height: "65%", score: 6.5 },
+    { day: "SUN", height: "75%", score: 7.5 },
   ];
 
   return (
