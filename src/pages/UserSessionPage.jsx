@@ -1,45 +1,61 @@
 // src/pages/UserSessionPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/UserSessionPage.css';
 import SessionTimer from '../components/SessionTimer/SessionTimer';
 import pawIcon from '../assets/paw.png';
 import reportIcon from '../assets/report_icon.png';
 import catIcon from '../assets/cat.png';
+import { PostureContext } from '../context/PostureContext';
+import videoIcon from '../assets/video.png';
+import homeIcon from '../assets/4-01.png';
 
 const UserSessionPage = () => {
   const [cameraEnabled, setCameraEnabled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [timerState, setTimerState] = useState('stopped'); // 'stopped', 'running', 'paused'
+  const [sessionCompleted, setSessionCompleted] = useState(false);
+
+  // Get posture tracking functions from context
+  const { startTracking, stopTracking, isTracking } = useContext(PostureContext);
+
+  // Check if tracking was previously enabled
+  useEffect(() => {
+    // For debugging
+    console.log("Current tracking state:", isTracking);
+  }, [isTracking]);
 
   const handleGiveUpClick = () => {
     setShowModal(true);
   };
-  
+
   const handleCancel = () => {
     setShowModal(false);
   };
-  
+
   const handleConfirmGiveUp = () => {
     handleTimerControl('stopped'); // resets the timer
     setShowModal(false);
   };
 
-  // Simplified camera toggle
   const handleCameraToggle = async (e) => {
     const shouldEnable = e.target.checked;
-    
+
     if (shouldEnable) {
       try {
         // Request camera access
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        
+
         // Stop the stream - we just needed to check access
         stream.getTracks().forEach(track => track.stop());
-        
-        // Enable camera if access is granted
+
+        // Enable camera
         setCameraEnabled(true);
-        console.log("Camera access granted and enabled");
+
+        // Start posture tracking in the context
+        startTracking();
+
+        console.log("Camera enabled and tracking started");
       } catch (error) {
         console.error('Error accessing camera:', error);
         alert('Could not access camera. Please check your browser permissions.');
@@ -47,15 +63,36 @@ const UserSessionPage = () => {
         e.target.checked = false;
       }
     } else {
-      // Turn off camera
+      // Disable camera
       setCameraEnabled(false);
-      console.log("Camera disabled");
+
+      // Stop posture tracking in the context
+      stopTracking();
+
+      console.log("Camera disabled and tracking stopped");
     }
   };
 
   const handleTimerControl = (action) => {
     setTimerState(action);
+
+    if (action === 'paused') {
+      stopTracking();           // Pause posture tracking
+      setCameraEnabled(false);  // Also visually toggle the camera off
+    }
+
+    if (action === 'running' && cameraEnabled) {
+      startTracking();
+      setCameraEnabled(true);
+      // Resume posture tracking
+    }
+
+    if (action === 'stopped') {
+      stopTracking();           // Also stop posture tracking if timer is reset
+      setCameraEnabled(false);  // And update camera switch UI
+    }
   };
+
 
   return (
     <div className="session-page">
@@ -74,61 +111,84 @@ const UserSessionPage = () => {
         </div>
 
         {/* Session Timer Component */}
-        <SessionTimer
-          initialTime="08:00:00"
-          timerState={timerState}
-          cameraEnabled={cameraEnabled} // Pass camera status to SessionTimer
-        />
-
-        {/* Timer Control Buttons */}
-        <div className="timer-controls">
-          {timerState === 'stopped' && (
-            <button
-              className="control-button start-button"
-              onClick={() => handleTimerControl('running')}
-            >
-              Start
+        {sessionCompleted ? (
+          <div className="session-complete-wrapper">
+            <h2>New Building in Town!</h2>
+            <p>We cats know you can do this, human!</p>
+            <img src={require('../assets/completed-house.png')} alt="New building" className="building-gif" style={{ width: '400px', height: '400px' }} />
+            <button className="new-session-button" onClick={() => window.location.reload()}>
+              New Session
             </button>
-          )}
+          </div>
+        ) : (
+          <>
+            <SessionTimer
+              initialTime="08:00:00"
+              timerState={timerState}
+              cameraEnabled={cameraEnabled}
+              onSessionComplete={() => setSessionCompleted(true)}
+            />
+            {/* Timer Control Buttons */}
+            <div className="timer-controls">
+              {timerState === 'stopped' && (
+                <button
+                  className="control-button start-button"
+                  onClick={() => handleTimerControl('running')}
+                >
+                  Start
+                </button>
+              )}
 
-          {timerState === 'running' && (
-            <>
-              <button
-                className="control-button pause-button"
-                onClick={() => handleTimerControl('paused')}
-              >
-                Pause
-              </button>
-              <button
-                className="control-button stop-button"
-                onClick={handleGiveUpClick}
-              >
-                Give Up
-              </button>
-            </>
-          )}
+              {timerState === 'running' && (
+                <>
+                  <button
+                    className="control-button pause-button"
+                    onClick={() => handleTimerControl('paused')}
+                  >
+                    Pause
+                  </button>
+                  <button
+                    className="control-button stop-button"
+                    onClick={handleGiveUpClick}
+                  >
+                    Give Up
+                  </button>
+                </>
+              )}
 
-          {timerState === 'paused' && (
-            <>
-              <button
-                className="control-button resume-button"
-                onClick={() => handleTimerControl('running')}
-              >
-                Resume
-              </button>
-              <button
-                className="control-button stop-button"
-                onClick={handleGiveUpClick}
-              >
-                Give Up
-              </button>
-            </>
-          )}
-        </div>
+              {timerState === 'paused' && (
+                <>
+                  <button
+                    className="control-button resume-button"
+                    onClick={() => handleTimerControl('running')}
+                  >
+                    Resume
+                  </button>
+                  <button
+                    className="control-button stop-button"
+                    onClick={handleGiveUpClick}
+                  >
+                    Give Up
+                  </button>
+                </>
+              )}
+            </div>
+          </>
+        )}
+
 
         {/* Item Buttons on the side */}
         <div className="side-buttons">
           <div className="tooltip-wrapper">
+            <Link to="/" className="side-button">
+              <img src={homeIcon} alt="Home" style={{ width: '50px', height: '50px' }} />
+            </Link>
+            <span className="tooltip-text">User Home</span>
+          </div>
+          <div className="tooltip-wrapper">
+            {sessionCompleted && (
+              <div className="speech-bubble">Try placing your new<br />building in Cat Town!</div>
+            )}
             <Link to="/townpreview" className="side-button">
               <img src={pawIcon} alt="Paw" />
             </Link>
@@ -144,12 +204,12 @@ const UserSessionPage = () => {
 
           <div className="tooltip-wrapper">
             <Link to="/videoposture" className="side-button">
-              <img src={reportIcon} alt="Report" />
+              <img src={videoIcon} alt="Report" style={{ width: '100px', height: '100px' }} />
             </Link>
             <span className="tooltip-text">Posture Detection System</span>
           </div>
         </div>
-        
+
         {/* Modal Overlay */}
         {showModal && (
           <div className="modal-overlay">
@@ -166,6 +226,7 @@ const UserSessionPage = () => {
         )}
       </div>
     </div>
+
   );
 };
 

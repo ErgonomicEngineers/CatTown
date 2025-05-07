@@ -4,6 +4,9 @@ import CatTownPage from "./pages/CatTownPage";
 import CenteredPreviewPage from "./pages/CenteredPreviewPage";
 import UserSessionPage from "./pages/UserSessionPage";
 import VideoPosturePage from "./pages/VideoPosturePage";
+import { PostureProvider } from './context/PostureContext';
+
+
 
 // define your route tree
 const router = createHashRouter([
@@ -32,7 +35,12 @@ const router = createHashRouter([
 
 function App() {
   // RouterProvider will render the matching route element
-  return <RouterProvider router={router} />;
+  return (
+    <PostureProvider>
+      <RouterProvider router={router} />
+    </PostureProvider>
+    
+  );
 }
 
 export default App;

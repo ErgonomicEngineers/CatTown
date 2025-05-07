@@ -1,0 +1,35 @@
+.cat-icon {
+    width: 440px;
+    height: 280px;
+    position: relative;
+    opacity: 0;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  }
+  
+  /* Good: slides in from top-left (translate from top-left) */
+  .notification-container.good .cat-icon {
+    transform: translate(-150%, -150%);
+  }
+  .notification-container.good .cat-icon.visible {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  
+  /* Bad: slides in from top-right */
+  .notification-container.bad .cat-icon {
+    transform: translate(150%, -150%);
+  }
+  .notification-container.bad .cat-icon.visible {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  
+  /* Neutral: slides in from bottom-left */
+  .notification-container.neutral .cat-icon {
+    transform: translate(-150%, 150%);
+  }
+  .notification-container.neutral .cat-icon.visible {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  

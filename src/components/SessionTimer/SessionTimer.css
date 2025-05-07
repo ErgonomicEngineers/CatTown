@@ -163,3 +163,103 @@
   line-height: 1;
   text-align: center;
 }
+
+/* Add these styles to your SessionTimer.css file */
+
+/* Posture Score Widget */
+.posture-score-widget {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+
+}
+
+
+.posture-score-widget.good {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #4CAF50;
+}
+
+.posture-score-widget.neutral {
+  background-color: #FFF8E1;
+  color: #F57F17;
+  border: 1px solid #FFC107;
+}
+
+.posture-score-widget.bad {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border: 1px solid #F44336;
+}
+
+.posture-score-value {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.posture-score-label {
+  font-size: 14px;
+}
+
+
+
+/* Animation for posture score updates */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Apply animation when posture state changes */
+.posture-score-widget.good, 
+.posture-score-widget.neutral, 
+.posture-score-widget.bad {
+  animation: pulse 0.5s ease;
+}
+
+
+/* Make sure the timer value has enough space */
+.time-value {
+  margin-top: 5px;
+}
+.session-complete-wrapper {
+  background-color: white;
+  padding: px;
+  border-radius: 16px;
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.session-complete-ui h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.session-complete-ui p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.building-gif {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.new-session-button {
+  background-color: black;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
