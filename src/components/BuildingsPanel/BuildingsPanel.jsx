@@ -22,9 +22,10 @@ const Header = styled.div`
   font-family: "Inter", sans-serif;
   font-size: 20px;
   font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin: 24px 0 18px 0;
+  margin: 24px 0 35px 0;
+  width: 430px;
+  height: 29px;
+  flex-shrink: 0;
 `;
 
 const GridWrapper = styled.div`
@@ -46,15 +47,15 @@ const ArrowButton = styled.img`
 const BuildingsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 18px 18px;
   width: 500px;
-  min-height: 1000px;
+  min-height: 531px;
 `;
 
 const BuildingCard = styled.div`
-  width: 229px;
-  height: 229px;
+  width: 165px;
+  height: 165px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #fff;
@@ -65,7 +66,6 @@ const BuildingCard = styled.div`
   justify-content: center;
   padding: 0;
 `;
-
 const ResetButton = styled.button`
   margin: 24px auto 0 auto;
   background: #fff;
@@ -91,7 +91,7 @@ const ResetButton = styled.button`
 const BuildingsPanel = ({ buildings }) => {
   const { setNodeRef } = useDroppable({ id: "available-buildings-panel" });
   const [page, setPage] = useState(0);
-  const buildingsPerPage = 8;
+  const buildingsPerPage = 6;
   const totalPages = Math.ceil(buildings.length / buildingsPerPage);
   const pagedBuildings = buildings.slice(
     page * buildingsPerPage,

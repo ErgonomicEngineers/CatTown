@@ -19,18 +19,22 @@ const theme = {
 };
 
 const PageContainer = styled.div`
+  height: auto;
   min-height: 100vh;
   padding: 32px 0;
   background: white;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 116px;
+  overflow-y: visible;
+  position: relative;
 `;
 
 const MainContent = styled.div`
   display: flex;
   gap: 48px;
+  height: auto;
+  overflow-y: visible;
 `;
 
 const LeftPanel = styled.div`
@@ -120,19 +124,26 @@ const AvatarBubbleRow = styled.div`
 `;
 
 const SavedMessage = styled.span`
-  margin-left: 16px;
+  position: absolute;
+  top: 20%;
+  left: 29.1%;
   color: #458445;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 2rem;
   transition: opacity 0.3s;
+  background: #EEEEF3;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 `;
 
 const Avatar = styled.img`
   display: block;
   margin: 0 auto;
-  width: 500px;
+  width: 800px;
   height: auto;
-  margin-top: 0;
+  margin-top: -150px;
   margin-bottom: 0;
 `;
 
@@ -340,7 +351,7 @@ function CatTownPage() {
                   ref={townGridRef}
                   buildings={townBuildings}
                   gridSize={{ rows: 3, cols: 3 }}
-                  cellSize={199.33}
+                  cellSize={165}
                 />
               </GridWrapper>
               <AvatarBubbleRow>
@@ -352,7 +363,7 @@ function CatTownPage() {
               onReset={handleReset}
             />
           </MainContent>
-          <FloatingButton onClick={() => navigate("/")}>
+          <FloatingButton onClick={() => navigate("/townpreview")}>
             <img src={crossImage} alt="Cross" />
           </FloatingButton>
         </PageContainer>

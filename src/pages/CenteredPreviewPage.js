@@ -37,11 +37,11 @@ const GridAvatarWrapper = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 657px;
-  height: 657px;
+  width: 700px;
+  height: 700px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
-  margin-top: -426px;
+  margin-top: -550px;
 `;
 
 const FloatingButton = styled.button`
@@ -72,7 +72,8 @@ const FloatingButton = styled.button`
 
 // Hide grid lines by passing a prop to TownGrid and using a custom style
 const NoLineGridWrapper = styled.div`
-  margin-left: 260px;
+  margin-left: 290px;
+  margin-top: 100px;
   & > div {
     border: none !important;
     background: transparent !important;
@@ -144,7 +145,7 @@ function CenteredPreviewPage() {
         <FloatingButton onClick={() => navigate("/cattown")}>
           <img src={toolImage} alt="Tool" />
         </FloatingButton>
-        <BackButton onClick={() => navigate("/cattown")}>
+        <BackButton onClick={() => navigate("/")}>
           <img src={backImage} alt="Back" />
         </BackButton>
       </CenteredContainer>
