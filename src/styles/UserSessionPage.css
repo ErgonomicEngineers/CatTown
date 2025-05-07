@@ -316,3 +316,57 @@ input:checked + .toggle-slider:before {
   border-radius: 8px;
   cursor: pointer;
 }
+
+.session-complete-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  width: 90%;
+  max-width: 500px;
+  height: auto;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  
+}
+
+.session-complete-wrapper h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.session-complete-wrapper p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.building-gif {
+  width: 200px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.new-session-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.new-session-button:hover {
+  background-color: #444;
+}
+
