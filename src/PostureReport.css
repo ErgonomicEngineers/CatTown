@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.session-layout {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.top-row {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.session-box {
+  background-color: white;
+  border: 1.5px solid #ccc;
+  border-radius: 16px;
+  width: 751px;
+  height: 888px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* Posture Graph Box (right side) */
+.posture-graph {
+  background-color: white;
+  border: 1.5px solid #ccc;
+  border-radius: 12px;
+  width: 541px;
+  height: 370px;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 14px;
+  margin: 0.5rem 0 1rem;
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-box.gray {
+  background-color: #e0e5e9;
+}
+
+.legend-box.orange {
+  background-color: #faae41;
+}
+
+.legend-box.red {
+  background-color: #82c596;
+}
+
+
+/* Session Grid Layout */
+.session-grid {
+  display: flex;
+  flex: 1;
+  
+  height: 100%;
+}
+
+/* Hour Labels (left vertical) */
+.grid-hours {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  width: 50px;
+  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  color: #444;
+}
+
+.hour-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+
+/* Day Columns */
+.grid-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  flex: 1;
+  gap: 0.25rem;
+}
+
+.day-column {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr); /* one extra row */
+  flex: 1;
+  
+}
+
+.hour-cell {
+  border-bottom: 1px solid #f0f0f0;
+;
+  border-left: 1px solid #eee;
+}
+
+.day-label {
+  vertical-align: bottom;
+
+  grid-row: 10;
+  text-align: center;
+  font-size: 14px;
+  border: none;
+  padding-top: 6px;
+
+}
+
+.session-tooltip-wrapper {
+  position: relative;
+}
+
+.session-tooltip {
+  visibility: hidden;
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.session-tooltip-wrapper:hover .session-tooltip {
+  visibility: visible;
+}
