@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/CatTown/static/css/main.8b716bfe.css",
-    "main.js": "/CatTown/static/js/main.88f17ec6.js",
+    "main.js": "/CatTown/static/js/main.e7f083f4.js",
     "static/media/avatar-face.gif": "/CatTown/static/media/avatar-face.6b896aa79db9c5133d3e.gif",
     "static/media/build3.gif": "/CatTown/static/media/build3.a8f6e46c465ee59c0499.gif",
     "static/media/build4.gif": "/CatTown/static/media/build4.75bbe26d08717e609a37.gif",
@@ -9,7 +9,7 @@
     "static/media/build1.gif": "/CatTown/static/media/build1.6f944767db55bdd0be88.gif",
     "static/media/build0.gif": "/CatTown/static/media/build0.9518fdad1e53604ea523.gif",
     "static/media/avatar-face.png": "/CatTown/static/media/avatar-face.6d30624fddda9bf5e8a9.png",
-    "static/media/Average_Score.png": "/CatTown/static/media/Average_Score.e79009a77ac3d1a7aa12.png",
+    "static/media/Average_Score.png": "/CatTown/static/media/Average_Score.eb9271ac52a430b55bd8.png",
     "static/media/completed-house.png": "/CatTown/static/media/completed-house.b4d1d479ad6524541247.png",
     "static/media/4-01.png": "/CatTown/static/media/4-01.7a9d4eb39f531718d799.png",
     "static/media/incomplete_house.png": "/CatTown/static/media/incomplete_house.2f04690e97424abd4bf3.png",
@@ -25,10 +25,10 @@
     "static/media/1-01.png": "/CatTown/static/media/1-01.e3cf0c4e4e258a2992ee.png",
     "index.html": "/CatTown/index.html",
     "main.8b716bfe.css.map": "/CatTown/static/css/main.8b716bfe.css.map",
-    "main.88f17ec6.js.map": "/CatTown/static/js/main.88f17ec6.js.map"
+    "main.e7f083f4.js.map": "/CatTown/static/js/main.e7f083f4.js.map"
   },
   "entrypoints": [
     "static/css/main.8b716bfe.css",
-    "static/js/main.88f17ec6.js"
+    "static/js/main.e7f083f4.js"
   ]
 }
