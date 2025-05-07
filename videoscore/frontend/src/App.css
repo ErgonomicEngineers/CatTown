@@ -1,55 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Container */
 .container {
   text-align: center;
   padding: 2rem;
-  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
 }
 
-.widget-btn {
+/* Button Styles */
+.back-btn,
+.video-btn,
+.cattown-btn {
   position: fixed;
+  font-size: 1.5rem;
+  padding: 0.75rem;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-btn {
   bottom: 20px;
   right: 20px;
-  background-color: #007bff;
-  color: white;
-  font-size: 1.5rem;
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
 }
 
-.widget-btn:hover {
+.cattown-btn {
+  bottom: 100px;
+  right: 20px;
+}
+
+.back-btn {
+  bottom: 20px;
+  right: 20px;
+}
+
+.video-btn:hover,
+.back-btn:hover,
+.cattown-btn:hover {
   background-color: #0056b3;
+}
+
+.score-label {
+  font-size: 1.2rem;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-weight: 500;
+  margin: 10px;
+  color: black;
+  border: 1px solid black;
+  background-color: #ddd; /* fallback default */
+}
+
+/* Score label colors */
+.score-label.good {
+  background-color: #a8e6cf;
+}
+
+.score-label.neutral {
+  background-color: #ffeaa7;
+}
+
+.score-label.poor {
+  background-color: #ff8b94;
+}
+
+/* Video Section */
+.video-page {
+  padding: 2rem;
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+/* Video Styling */
+.video-wrapper {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .video-wrapper img {
   width: 100%;
   height: auto;
-  max-width: 280px; /* Limit the max width of the image */
-  border: 3px solid #333;
+  object-fit: contain;
+  border: none;
   border-radius: 10px;
-  margin-top: 1rem;
-}
-
-.score-label {
-  font-size: 1.2rem;
-  margin: 1rem 0;
-}
-
-.widget {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: white;
-  padding: 15px;
-  border: 2px solid #007bff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  width: 300px; /* Smaller widget size */
+  box-shadow: none;
+  background-color: transparent;
 }
