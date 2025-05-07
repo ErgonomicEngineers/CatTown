@@ -1,11 +1,14 @@
 // src/components/SessionTimer/SessionTimer.jsx
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import './SessionTimer.css';
-import catGif from "../../assets/cat_build0.gif";
+import catGif0 from "../../assets/build0.gif";
+import catGif1 from "../../assets/build1.gif";
+import catGif2 from "../../assets/build2.gif";
+import catGif3 from "../../assets/build3.gif";
+import catGif4 from "../../assets/build4.gif";
 import orangeCatIcon from "../../assets/catDot.png";
 import Notification from '../Notifications/Notifications';
 import { PostureContext } from '../../context/PostureContext';
-import completedHouse from '../../assets/completed-house.png';
 
 const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', cameraEnabled = false, onSessionComplete }) => {
   const parseTime = (timeString) => {
@@ -36,9 +39,16 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
   const postureContext = useContext(PostureContext);
   const postureScore = postureContext ? postureContext.score : null;
   const [notification, setNotification] = useState({ type: null, key: 0 });
-  const [currentGif, setCurrentGif] = useState(catGif);
+
+  // Building progress state
+  const [buildLevel, setBuildLevel] = useState(0);
+  const [currentGif, setCurrentGif] = useState(catGif0);
   const [sessionCompleted, setSessionCompleted] = useState(false);
 
+  // Array of building GIFs for easy access (5 total including build0)
+  const buildGifs = [catGif0, catGif1, catGif2, catGif3, catGif4];
+
+  // Refs for timer and posture tracking
   const timerRef = useRef(null);
   const totalSecondsRef = useRef(hours * 3600 + minutes * 60 + seconds);
   const startTimeRef = useRef(totalSecondsRef.current);
@@ -49,6 +59,11 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
   const lastScoreRef = useRef(null);
   const lastScoreTimeRef = useRef(0);
 
+  // Refs for tracking consecutive good/bad posture for building changes
+  const goodPostureTimeRef = useRef(0);
+  const badPostureTimeRef = useRef(0);
+  const buildingUpdateTimeRef = useRef(0);
+
   useEffect(() => {
     if (timerState === 'stopped') {
       totalSecondsRef.current = hours * 3600 + minutes * 60 + seconds;
@@ -56,41 +71,105 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
     }
   }, [hours, minutes, seconds, timerState]);
 
+  // Effect to start with build1 when timer starts
+  useEffect(() => {
+    if (timerState === 'running' && buildLevel === 0) {
+      setBuildLevel(1);
+      setCurrentGif(buildGifs[1]);
+    }
+  }, [timerState, buildLevel]);
+
+  // Effect to update building based on posture score
+  useEffect(() => {
+    if (!cameraEnabled || postureScore === null || timerState !== 'running') {
+      // Reset tracking times when conditions not met
+      goodPostureTimeRef.current = 0;
+      badPostureTimeRef.current = 0;
+      return;
+    }
+
+    const now = Date.now();
+    const timeSinceLastUpdate = now - buildingUpdateTimeRef.current;
+    buildingUpdateTimeRef.current = now;
+
+    // Update posture tracking time based on score
+    if (postureScore >= 8) { // Good posture
+      goodPostureTimeRef.current += timeSinceLastUpdate;
+      badPostureTimeRef.current = 0; // Reset bad time counter
+
+      // If good posture maintained for 5 seconds (5000ms)
+      if (goodPostureTimeRef.current >= 200) {
+        // Increment building level up to max (level 4)
+        if (buildLevel < 4) {
+          const newLevel = buildLevel + 1;
+          setBuildLevel(newLevel);
+          setCurrentGif(buildGifs[newLevel]);
+          console.log(`Building upgraded to level ${newLevel} due to good posture!`);
+        }
+        goodPostureTimeRef.current = 0; // Reset counter after upgrade
+      }
+    }
+    // Update the poor posture section in the useEffect for updating building based on posture score
+
+    // Modify this part:
+    else if (postureScore < 3) { // Bad posture
+      badPostureTimeRef.current += timeSinceLastUpdate;
+      goodPostureTimeRef.current = 0; // Reset good time counter
+
+      // CHANGE THIS TO 200ms to match the good posture upgrade speed
+      if (badPostureTimeRef.current >= 200) {
+        // Decrement building level down to min (level 0)
+        if (buildLevel > 0) {
+          const newLevel = buildLevel - 1;
+          setBuildLevel(newLevel);
+          setCurrentGif(buildGifs[newLevel]);
+          console.log(`Building downgraded to level ${newLevel} due to bad posture!`);
+        }
+        badPostureTimeRef.current = 0; // Reset counter after downgrade
+      }
+    }
+    else { // Neutral posture
+      // Reset both counters - building stays the same
+      goodPostureTimeRef.current = 0;
+      badPostureTimeRef.current = 0;
+    }
+  }, [postureScore, cameraEnabled, timerState, buildLevel]);
+
+  // Effect for notifications based on posture score
   useEffect(() => {
     if (!cameraEnabled || postureScore === null || timerState !== 'running') return;
-  
+
     const interval = setInterval(() => {
       const now = Date.now();
       const timeSinceLastScore = now - lastScoreTimeRef.current;
       lastScoreTimeRef.current = now;
-  
-    // POSTURE NOTIFICATION LOGIC
-    if (postureScore < 3) {
-      showNotification('bad');
-      badPostureCountRef.current += 1;
-      goodPostureStreakRef.current = 0;
-      lastScoreRef.current = postureScore;
-      return;
-    }
 
-    if (postureScore >= 3 && postureScore <= 7) {
-      showNotification('neutral');
-      badPostureDurationRef.current = 0;
-      lastScoreRef.current = postureScore;
-      return;
-    }
+      // POSTURE NOTIFICATION LOGIC
+      if (postureScore < 3) {
+        showNotification('bad');
+        badPostureCountRef.current += 1;
+        goodPostureStreakRef.current = 0;
+        lastScoreRef.current = postureScore;
+        return;
+      }
 
-    if (postureScore > 7) {
-      showNotification('good');
-      goodPostureStreakRef.current += 1;
-      badPostureDurationRef.current = 0;
-      lastScoreRef.current = postureScore;
-    }
-  }, 5000); // every 5 seconds
-  
+      if (postureScore >= 3 && postureScore <= 7) {
+        showNotification('neutral');
+        badPostureDurationRef.current = 0;
+        lastScoreRef.current = postureScore;
+        return;
+      }
+
+      if (postureScore > 7) {
+        showNotification('good');
+        goodPostureStreakRef.current += 1;
+        badPostureDurationRef.current = 0;
+        lastScoreRef.current = postureScore;
+      }
+    }, 5000); // every 5 seconds
+
     return () => clearInterval(interval);
   }, [postureScore, cameraEnabled, timerState]);
-  
 
   const showNotification = (type) => {
     setNotification({ type, key: Date.now() });
@@ -101,56 +180,73 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
   };
 
   useEffect(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-
-    if (timerState === 'running') {
-      setIsEditing(false);
-      setSessionCompleted(false);
-      if (cameraEnabled) {
-        setTimeout(() => showNotification("neutral"), 1000);
-      }
-      timerRef.current = setInterval(() => {
-        if (totalSecondsRef.current <= 0) {
-          clearInterval(timerRef.current);
-          handleSessionEnd();
-          return;
-        }
-        totalSecondsRef.current -= 1;
-        const newHours = Math.floor(totalSecondsRef.current / 3600);
-        const newMinutes = Math.floor((totalSecondsRef.current % 3600) / 60);
-        const newSeconds = totalSecondsRef.current % 60;
-        setHours(newHours);
-        setMinutes(newMinutes);
-        setSeconds(newSeconds);
-        const elapsedTime = startTimeRef.current - totalSecondsRef.current;
-        const progressPercent = Math.min(100, (elapsedTime / startTimeRef.current) * 100);
-        setProgress(progressPercent);
-      }, 1000);
-    } else if (timerState === 'paused') {
-      setIsEditing(false);
-    } else if (timerState === 'stopped') {
-      setHours(8);
-      setMinutes(0);
-      setSeconds(0);
-      setIsEditing(true);
-      setProgress(0);
-      setSessionCompleted(false);
-      badPostureCountRef.current = 0;
-      goodPostureStreakRef.current = 0;
-      badPostureDurationRef.current = 0;
-      lastScoreRef.current = null;
-      setCurrentGif(catGif);
+    if (!cameraEnabled || postureScore === null || timerState !== 'running') {
+      // Reset tracking times when conditions not met
+      goodPostureTimeRef.current = 0;
+      badPostureTimeRef.current = 0;
+      return;
     }
 
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [timerState, cameraEnabled]);
+    const now = Date.now();
+    const timeSinceLastUpdate = now - buildingUpdateTimeRef.current;
+    buildingUpdateTimeRef.current = now;
+
+    // Update posture tracking time based on score
+    if (postureScore >= 8) { // Good posture
+      goodPostureTimeRef.current += timeSinceLastUpdate;
+      badPostureTimeRef.current = 0; // Reset bad time counter
+
+      // If good posture maintained for 200ms (reduced for faster upgrades)
+      if (goodPostureTimeRef.current >= 200) {
+        // Increment building level up to max (level 4)
+        if (buildLevel < 4) {
+          const newLevel = buildLevel + 1;
+          setBuildLevel(newLevel);
+          setCurrentGif(buildGifs[newLevel]);
+          console.log(`Building upgraded to level ${newLevel} due to good posture!`);
+        }
+        goodPostureTimeRef.current = 0; // Reset counter after upgrade
+      }
+    }
+    else if (postureScore < 3) { // Bad posture
+      badPostureTimeRef.current += timeSinceLastUpdate;
+      goodPostureTimeRef.current = 0; // Reset good time counter
+
+      // If bad posture maintained for 200ms (reduced for faster downgrades)
+      if (badPostureTimeRef.current >= 200) {
+        // Decrement building level down to min (level 0)
+        if (buildLevel > 0) {
+          const newLevel = buildLevel - 1;
+          setBuildLevel(newLevel);
+          setCurrentGif(buildGifs[newLevel]);
+          console.log(`Building downgraded to level ${newLevel} due to bad posture!`);
+        }
+        badPostureTimeRef.current = 0; // Reset counter after downgrade
+      }
+    }
+    else { // Neutral posture
+      // Reset both counters - building stays the same
+      goodPostureTimeRef.current = 0;
+      badPostureTimeRef.current = 0;
+    }
+  }, [postureScore, cameraEnabled, timerState, buildLevel]);
 
   const handleSessionEnd = () => {
     setSessionCompleted(true);
-    onSessionComplete?.(); // Notify parent
-    const isSuccessful = badPostureCountRef.current < 5;
+
+
+    // Log the current build level for debugging
+    console.log(`Session ended with building level: ${buildLevel}`);
+
+    // Pass building completion status to parent component
+    if (onSessionComplete) {
+      const isFullyBuilt = buildLevel === 4;
+      console.log(`Sending completion status to parent: ${isFullyBuilt}`);
+      onSessionComplete(isFullyBuilt);
+    }
+
+    // Show a completion notification based on building level
+    const isSuccessful = buildLevel === 4;
     showNotification(isSuccessful ? 'good' : 'bad');
   };
 
@@ -205,7 +301,7 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
           onDismiss={handleNotificationDismiss}
         />
       )}
-      
+
       <div className="timer-circle-container">
         <svg width="550" height="550" viewBox="0 0 550 550">
           <circle cx="275" cy="275" r={radius} fill="none" stroke="#E6E6E6" strokeWidth="10" />
@@ -235,7 +331,7 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
               <span className="posture-tracking-off">Session Length</span>
             )}
           </div>
-          
+
           <div className="time-labels-row">
             <span className="time-unit-label">hr</span>
             <span className="time-unit-label time-unit-spacer"></span>
@@ -261,11 +357,20 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
             <div className="time-value">{formatTimeDisplay()}</div>
           )}
         </div>
+
         <div className="cat-animation">
-          <img src={currentGif} alt="Cat animation" className="cat-image" />
+          <img
+            src={currentGif}
+            alt={`Building level ${buildLevel}`}
+            className="cat-image"
+            style={{
+              transition: 'width 0.3s'  // Smooth transition when size changes
+            }}
+          />
+          <div className="building-level-indicator">
+          </div>
         </div>
       </div>
-
     </div>
   );
 };
