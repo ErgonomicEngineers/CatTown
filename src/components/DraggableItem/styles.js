@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
 export const ItemContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid #6b563f;
-  border-radius: 8px;
+  align-items: stretch;
+  justify-content: stretch;
+  background: none;
+  border: none;
+  border-radius: 0;
   cursor: grab;
   transition: transform 0.2s, box-shadow 0.2s;
   z-index: 2000;
-
-  width: ${({ size }) => (size?.cols === 2 ? "210px" : "100px")};
-  height: ${({ size }) => (size?.rows === 2 ? "210px" : "100px")};
 
   &[data-dragging="true"] {
     z-index: 2000;

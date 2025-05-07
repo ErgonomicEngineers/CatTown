@@ -18,10 +18,9 @@ const highlightStyles = {
 };
 
 const Cell = styled.div`
-  aspect-ratio: 1;
-  width: 100px;
-  background: ${(props) =>
-    props.$hideBorder ? "transparent" : "rgba(255, 255, 255, 0.5)"};
+  min-width: 0;
+  min-height: 0;
+  background: transparent;
   border: ${(props) => (props.$hideBorder ? "none" : "1px solid #e0e0e0")};
   display: flex;
   align-items: center;
