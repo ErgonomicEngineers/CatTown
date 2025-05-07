@@ -115,7 +115,7 @@ const UserSessionPage = () => {
           <div className="session-complete-wrapper">
             <h2>New Building in Town!</h2>
             <p>We cats know you can do this, human!</p>
-            <img src={require('../assets/completed-house.png')} alt="New building" className="building-gif" />
+            <img src={require('../assets/completed-house.png')} alt="New building" className="building-gif" style={{ width: '400px', height: '400px' }} />
             <button className="new-session-button" onClick={() => window.location.reload()}>
               New Session
             </button>
@@ -186,6 +186,9 @@ const UserSessionPage = () => {
             <span className="tooltip-text">User Home</span>
           </div>
           <div className="tooltip-wrapper">
+            {sessionCompleted && (
+              <div className="speech-bubble">Try placing your new<br />building in Cat Town!</div>
+            )}
             <Link to="/townpreview" className="side-button">
               <img src={pawIcon} alt="Paw" />
             </Link>

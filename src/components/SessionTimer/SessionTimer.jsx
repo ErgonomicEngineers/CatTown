@@ -7,7 +7,7 @@ import Notification from '../Notifications/Notifications';
 import { PostureContext } from '../../context/PostureContext';
 import completedHouse from '../../assets/completed-house.png';
 
-const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', cameraEnabled = false }) => {
+const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', cameraEnabled = false, onSessionComplete }) => {
   const parseTime = (timeString) => {
     const parts = timeString.split(':');
     if (parts.length === 2) {
@@ -149,6 +149,7 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
 
   const handleSessionEnd = () => {
     setSessionCompleted(true);
+    onSessionComplete?.(); // Notify parent
     const isSuccessful = badPostureCountRef.current < 5;
     showNotification(isSuccessful ? 'good' : 'bad');
   };
@@ -264,23 +265,7 @@ const SessionTimer = ({ initialTime = '08:00:00', timerState = 'stopped', camera
           <img src={currentGif} alt="Cat animation" className="cat-image" />
         </div>
       </div>
-      {sessionCompleted && (
-          <div className="session-complete-ui">
-          <h2>New Building in Town!</h2>
-          <p>We cats know you can do this, human!</p>
-          <img
-            src={completedHouse} // change to your final asset
-            alt="New building"
-            className="building-gif"
-          />
-          <button
-            className="new-session-button"
-            onClick={() => window.location.reload()} // or optionally reset internal state
-          >
-            New Session
-          </button>
-        </div>
-      )}
+
     </div>
   );
 };
