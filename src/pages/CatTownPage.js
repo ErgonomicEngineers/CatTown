@@ -123,6 +123,30 @@ const AvatarBubbleRow = styled.div`
   margin-top: -82px;
 `;
 
+const ConversationBubble = styled.div`
+  position: absolute;
+  right: -200px;
+  top: -50px;
+  background: #eeeef3;
+  padding: 16px 24px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 200px;
+  &:after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    bottom: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #eeeef3;
+  }
+`;
+
 const SavedMessage = styled.span`
   position: absolute;
   top: 20%;
@@ -131,7 +155,7 @@ const SavedMessage = styled.span`
   font-weight: bold;
   font-size: 2rem;
   transition: opacity 0.3s;
-  background: #EEEEF3;
+  background: #eeeef3;
   padding: 8px 16px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -151,8 +175,8 @@ const FloatingButton = styled.button`
   position: fixed;
   right: 40px;
   bottom: 40px;
-  width: 72px;
-  height: 72px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);

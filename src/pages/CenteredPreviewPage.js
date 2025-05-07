@@ -4,6 +4,7 @@ import GlobalStyles from "../styles/GlobalStyles";
 import TownGrid from "../components/TownGrid/TownGrid";
 import { buildings } from "../data/buildings";
 import avatarFace from "../assets/avatar-face.gif";
+import convoBubble from "../assets/convo_bubble.png";
 import { useNavigate } from "react-router-dom";
 import toolImage from "../assets/tool.png";
 import backImage from "../assets/back.png";
@@ -34,6 +35,7 @@ const GridAvatarWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 32px;
+  position: relative;
 `;
 
 const Avatar = styled.img`
@@ -44,12 +46,21 @@ const Avatar = styled.img`
   margin-top: -550px;
 `;
 
+const ConversationBubble = styled.img`
+  position: absolute;
+  right: -20px;
+  top: 200px;
+  width: 363px;
+  height: auto;
+  z-index: 1000;
+`;
+
 const FloatingButton = styled.button`
   position: fixed;
   right: 40px;
   bottom: 40px;
-  width: 72px;
-  height: 72px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
@@ -141,6 +152,7 @@ function CenteredPreviewPage() {
             />
           </NoLineGridWrapper>
           <Avatar src={avatarFace} alt="Avatar" />
+          <ConversationBubble src={convoBubble} alt="Conversation bubble" />
         </GridAvatarWrapper>
         <FloatingButton onClick={() => navigate("/cattown")}>
           <img src={toolImage} alt="Tool" />
