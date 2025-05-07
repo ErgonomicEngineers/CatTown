@@ -153,7 +153,7 @@ const UserSessionPage = () => {
         ) : (
           <>
             <SessionTimer
-              initialTime="08:00:00"
+              initialTime="00:00:20"
               timerState={timerState}
               cameraEnabled={cameraEnabled}
               onSessionComplete={handleSessionComplete}
@@ -231,7 +231,6 @@ const UserSessionPage = () => {
             </Link>
             <span className="tooltip-text">Posture Report</span>
           </div>
-
           <div className="tooltip-wrapper">
             <Link to="/videoposture" className="side-button">
               <img src={videoIcon} alt="Report" style={{ width: '100px', height: '100px' }} />
