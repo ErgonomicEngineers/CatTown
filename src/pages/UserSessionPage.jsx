@@ -226,10 +226,11 @@ const UserSessionPage = () => {
           </div>
 
           <div className="tooltip-wrapper">
-            <Link to="/items" className="side-button">
+            <Link to="/posturereport" className="side-button">
               <img src={reportIcon} alt="Report" />
             </Link>
             <span className="tooltip-text">Posture Report</span>
+    
           </div>
 
           <div className="tooltip-wrapper">

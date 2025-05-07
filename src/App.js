@@ -5,6 +5,8 @@ import CenteredPreviewPage from "./pages/CenteredPreviewPage";
 import UserSessionPage from "./pages/UserSessionPage";
 import VideoPosturePage from "./pages/VideoPosturePage";
 import { PostureProvider } from './context/PostureContext';
+import './PostureReport.css';
+import PostureReport from "./pages/PostureReport";
 
 
 
@@ -29,7 +31,10 @@ const router = createHashRouter([
     path: "/videoposture",
     element: <VideoPosturePage />,
   },
-
+  {
+    path: "/posturereport",
+    element: <PostureReport />,
+  }
   // …add more routes here…
 ]);
 
