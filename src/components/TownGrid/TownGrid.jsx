@@ -6,7 +6,10 @@ import { useDndContext } from "@dnd-kit/core";
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: ${({ gridSize, cellSize }) =>
+    `repeat(${gridSize?.cols || 3}, ${cellSize || 100}px)`};
+  grid-template-rows: ${({ gridSize, cellSize }) =>
+    `repeat(${gridSize?.rows || 3}, ${cellSize || 100}px)`};
   gap: 0;
   padding: 0;
   background: #fff;
@@ -18,7 +21,7 @@ const GridContainer = styled.div`
 `;
 
 const TownGrid = forwardRef(
-  ({ buildings, gridSize, hideGridLines = false }, ref) => {
+  ({ buildings, gridSize, hideGridLines = false, cellSize }, ref) => {
     const { active, over } = useDndContext();
     const [dragOverCell, setDragOverCell] = useState(null);
 
@@ -223,8 +226,7 @@ const TownGrid = forwardRef(
               >
                 <DraggableItem
                   id={buildingHere.id}
-                  name={buildingHere.name}
-                  emoji={buildingHere.emoji}
+                  image={buildingHere.image}
                   size={buildingHere.size}
                 />
               </GridCell>
@@ -252,7 +254,12 @@ const TownGrid = forwardRef(
     };
 
     return (
-      <GridContainer ref={ref} $hideGridLines={hideGridLines}>
+      <GridContainer
+        ref={ref}
+        $hideGridLines={hideGridLines}
+        gridSize={gridSize}
+        cellSize={cellSize}
+      >
         {renderGrid()}
       </GridContainer>
     );
