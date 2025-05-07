@@ -48,20 +48,22 @@ const BuildingsGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 18px 18px;
-  width: 320px;
-  min-height: 420px;
+  width: 500px;
+  min-height: 1000px;
 `;
 
 const BuildingCard = styled.div`
-  border-radius: 5px;
-  border: 3px solid rgba(128, 128, 128, 0.3);
+  width: 229px;
+  height: 229px;
+  flex-shrink: 0;
+  border-radius: 10px;
   background: #fff;
+  box-shadow: 0px 1px 7px 3px var(--Color-2, #bfbfd0);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 18px 0;
-  min-height: 90px;
+  padding: 0;
 `;
 
 const ResetButton = styled.button`
@@ -111,8 +113,8 @@ const BuildingsPanel = ({ buildings }) => {
             <BuildingCard key={building.id}>
               <DraggableItem
                 id={building.id}
-                name={building.name}
-                emoji={building.emoji}
+                image={building.image}
+                size={building.size}
               />
             </BuildingCard>
           ))}

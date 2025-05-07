@@ -7,6 +7,7 @@ import BuildingsPanel from "../components/BuildingsPanel/BuildingsPanel";
 import { buildings } from "../data/buildings";
 import avatarFace from "../assets/avatar-face.png";
 import { useNavigate } from "react-router-dom";
+import crossImage from "../assets/cross.png";
 
 const theme = {
   colors: {
@@ -20,10 +21,11 @@ const theme = {
 const PageContainer = styled.div`
   min-height: 100vh;
   padding: 32px 0;
-  background: ${(props) => props.theme.colors.background};
+  background: white;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 116px;
 `;
 
 const MainContent = styled.div`
@@ -60,21 +62,44 @@ const ActionButton = styled.button`
 `;
 
 const BigButton = styled.button`
-  min-width: 180px;
-  height: 59px;
-  border-radius: 7px;
+  display: inline-flex;
+  padding: 11px 54.182px 12.123px 55px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14.229px;
+  background: #eeeef3;
   font-size: 1.1rem;
   font-weight: 700;
-  border: 3px solid #8080804c;
-  background: #fff;
+  border: none;
   color: #333;
-  padding: 14px 36px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   transition: background 0.2s, transform 0.2s;
   cursor: pointer;
-  display: block;
   &:hover {
     background: #f5f5f5;
+    transform: scale(1.04);
+  }
+  &:active {
+    transform: scale(0.97);
+  }
+`;
+
+const ResetButton = styled.button`
+  display: inline-flex;
+  padding: 11px 71.182px 12.123px 72px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14.229px;
+  background: #212123;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+  &:hover {
+    background: #333;
     transform: scale(1.04);
   }
   &:active {
@@ -86,16 +111,12 @@ const GridWrapper = styled.div`
   position: relative;
 `;
 
-const SpeechBubble = styled.div`
-  margin: 24px auto 0 auto;
-  padding: 8px 24px;
-  background: #fff;
-  border-radius: 24px;
-  border: 2px solid #bbb;
-  font-size: 1.3rem;
-  color: #444;
-  width: fit-content;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+const AvatarBubbleRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  margin-top: -82px;
 `;
 
 const SavedMessage = styled.span`
@@ -109,7 +130,7 @@ const SavedMessage = styled.span`
 const Avatar = styled.img`
   display: block;
   margin: 0 auto;
-  width: 220px;
+  width: 500px;
   height: auto;
   margin-top: 0;
   margin-bottom: 0;
@@ -128,14 +149,16 @@ const FloatingButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  color: #8b7355;
   cursor: pointer;
   z-index: 100;
   transition: background 0.2s, transform 0.2s;
   &:hover {
     background: #f5f5f5;
     transform: scale(1.08);
+  }
+  img {
+    width: 30px;
+    height: 30px;
   }
 `;
 
@@ -155,7 +178,7 @@ function CatTownPage() {
   };
 
   const [townBuildings, setTownBuildings] = useState(getInitialBuildings);
-  const [gridSize] = useState({ rows: 5, cols: 5 });
+  const [gridSize] = useState({ rows: 3, cols: 3 });
   const townGridRef = useRef(null);
   const [showSaved, setShowSaved] = useState(false);
   const [confirmAnim, setConfirmAnim] = useState(false);
@@ -309,25 +332,29 @@ function CatTownPage() {
                 >
                   Confirm
                 </BigButton>
-                <BigButton onClick={handleReset}>Reset Town</BigButton>
+                <ResetButton onClick={handleReset}>Reset</ResetButton>
                 {showSaved && <SavedMessage>Saved!</SavedMessage>}
               </ButtonRow>
               <GridWrapper>
                 <TownGrid
                   ref={townGridRef}
                   buildings={townBuildings}
-                  gridSize={gridSize}
+                  gridSize={{ rows: 3, cols: 3 }}
+                  cellSize={199.33}
                 />
               </GridWrapper>
-              <Avatar src={avatarFace} alt="Avatar" />
-              <SpeechBubble>......</SpeechBubble>
+              <AvatarBubbleRow>
+                <Avatar src={avatarFace} alt="Avatar" />
+              </AvatarBubbleRow>
             </LeftPanel>
             <BuildingsPanel
               buildings={townBuildings.filter((b) => !b.position)}
               onReset={handleReset}
             />
           </MainContent>
-          <FloatingButton onClick={() => navigate("/")}>👁️</FloatingButton>
+          <FloatingButton onClick={() => navigate("/")}>
+            <img src={crossImage} alt="Cross" />
+          </FloatingButton>
         </PageContainer>
       </DndContext>
     </ThemeProvider>

@@ -2,7 +2,7 @@ import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { ItemContainer } from "./styles";
 
-const DraggableItem = ({ id, name, emoji, size }) => {
+const DraggableItem = ({ id, image, size }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
   });
@@ -21,8 +21,11 @@ const DraggableItem = ({ id, name, emoji, size }) => {
       {...listeners}
       {...attributes}
     >
-      <span className="emoji">{emoji}</span>
-      <span className="name">{name}</span>
+      <img
+        src={image}
+        alt="Building"
+        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+      />
     </ItemContainer>
   );
 };

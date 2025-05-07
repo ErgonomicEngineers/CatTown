@@ -3,8 +3,10 @@ import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "../styles/GlobalStyles";
 import TownGrid from "../components/TownGrid/TownGrid";
 import { buildings } from "../data/buildings";
-import avatarFace from "../assets/avatar-face.png";
+import avatarFace from "../assets/avatar-face.gif";
 import { useNavigate } from "react-router-dom";
+import toolImage from "../assets/tool.png";
+import backImage from "../assets/back.png";
 
 const theme = {
   colors: {
@@ -35,9 +37,11 @@ const GridAvatarWrapper = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 220px;
-  height: auto;
-  margin-top: 24px;
+  width: 657px;
+  height: 657px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  margin-top: -426px;
 `;
 
 const FloatingButton = styled.button`
@@ -53,8 +57,6 @@ const FloatingButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  color: #8b7355;
   cursor: pointer;
   z-index: 100;
   transition: background 0.2s, transform 0.2s;
@@ -62,10 +64,15 @@ const FloatingButton = styled.button`
     background: #f5f5f5;
     transform: scale(1.08);
   }
+  img {
+    width: 45px;
+    height: 30px;
+  }
 `;
 
 // Hide grid lines by passing a prop to TownGrid and using a custom style
 const NoLineGridWrapper = styled.div`
+  margin-left: 260px;
   & > div {
     border: none !important;
     background: transparent !important;
@@ -74,6 +81,29 @@ const NoLineGridWrapper = styled.div`
     border: none !important;
     background: transparent !important;
   }
+`;
+
+const BackButton = styled.button`
+  position: fixed;
+  left: 35px;
+  top: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const PreviewGridWrapper = styled.div`
+  width: 438px;
+  height: 438px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
 `;
 
 function CenteredPreviewPage() {
@@ -106,11 +136,17 @@ function CenteredPreviewPage() {
               buildings={placedBuildings}
               gridSize={gridSize}
               hideGridLines // This prop can be used in TownGrid to hide lines if needed
+              cellSize={146}
             />
           </NoLineGridWrapper>
           <Avatar src={avatarFace} alt="Avatar" />
         </GridAvatarWrapper>
-        <FloatingButton onClick={() => navigate("/cattown")}>🔧</FloatingButton>
+        <FloatingButton onClick={() => navigate("/cattown")}>
+          <img src={toolImage} alt="Tool" />
+        </FloatingButton>
+        <BackButton onClick={() => navigate("/cattown")}>
+          <img src={backImage} alt="Back" />
+        </BackButton>
       </CenteredContainer>
     </ThemeProvider>
   );
