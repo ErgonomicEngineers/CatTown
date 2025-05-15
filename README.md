@@ -49,3 +49,39 @@ pip install flask-cors
 pip install mediapipe
 pip install opencv-python
 pip install numpy
+
+## 🧑‍💻 Frontend Setup
+
+Install Node.js dependencies:
+
+```bash
+npm install
+
+## 🚀 Running the Application
+
+### ▶️ Start Backend Server
+
+Navigate to the backend directory and run the Flask server:
+
+```bash
+cd backend
+python app.py
+Note: app.py is located in the videoscore folder
+This starts the Flask server at: http://localhost:5000
+
+### ▶️ Start Frontend
+
+In a new terminal, run:
+
+```bash
+npm start
+This opens the React app at: http://localhost:3000
+
+## 🎮 Instructions
+
+1. Open [http://localhost:3000](http://localhost:3000) in your browser  
+2. Allow **camera permissions** when prompted  
+3. Toggle the camera to enable posture scoring  
+4. Position yourself in front of the camera  
+5. Click **"Start"** to begin the monitoring session  
+6. Maintain good posture — the **pixel cats** will react to your position!
