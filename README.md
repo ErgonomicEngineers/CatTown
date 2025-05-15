@@ -24,8 +24,7 @@ Cat Town is a web application that tracks your posture in real-time using your w
 
 ## ⚙️ Prerequisites
 
-- Python 3.8 or higher  
-- Node.js 14 or higher  
+- Python 3.8 - 3.10 
 - npm package manager  
 - Webcam for posture detection  
 - macOS (tested environment)
@@ -37,3 +36,16 @@ Cat Town is a web application that tracks your posture in real-time using your w
 ### 1. Clone the Repository
 - git clone https://github.com/ergonomicengineers/CatTown.git
 - cd CatTown
+
+## 🛠️ Installation
+
+### 📦 Backend Setup (Python)
+
+Install the required Python dependencies:
+
+```bash
+pip install flask
+pip install flask-cors
+pip install mediapipe
+pip install opencv-python
+pip install numpy
